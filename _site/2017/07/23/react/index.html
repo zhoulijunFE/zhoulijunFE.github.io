@@ -151,105 +151,129 @@
 
 <h2 id="react-jsx">React JSX</h2>
 <ul>
-  <li>Babel编译jsx-&gt;React.createElement(),不使用jsx也可以全通过js React,但是代码不简洁, 意思上是等价下
-```
-react元素创建,两种方式等价–&gt;元素区别组件
-const getHelloWord = &lt;h1&gt;Hello, world!&lt;/h1&gt;</li>
+  <li>Babel编译jsx-&gt;React.createElement(),不使用jsx也可以全通过js React,但是代码不简洁, 意思上是等价</li>
 </ul>
 
-<p>const element = React.createElement(
-  ‘h1’,
-  ‘Hello, world!’
-);</p>
-<pre><code>- 遇到 HTML 标签（以 &lt; 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析
-- 渲染之前,转义jsx值, 避免xss攻击
-- javaScript表达式: jsx中使用js表达式, 包裹{}
+<pre><code>react元素创建,两种方式等价--&gt;元素区别组件
+const getHelloWord = &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+const element = React.createElement(
+  'h1',
+  'Hello, world!'
+);
 </code></pre>
-<p>function formatName(user) {
-  return user.firstName + ‘ ‘ + user.lastName;
+<ul>
+  <li>遇到 HTML 标签（以 &lt; 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析</li>
+  <li>渲染之前,转义jsx值, 避免xss攻击</li>
+  <li>javaScript表达式: jsx中使用js表达式, 包裹{}
+    <pre><code>function formatName(user) {
+return user.firstName + ' ' + user.lastName;
 }
 function getGreeting(user) {
-  return &lt;h1&gt;Hello, {formatName(user)}&lt;/h1&gt;;–&gt;{}
-}</p>
-<pre><code>- jsx[用html元素]行内不能使用if\if else 语句
+return &lt;h1&gt;Hello, {formatName(user)}&lt;/h1&gt;;--&gt;{}
+}
 </code></pre>
-<p>if: &amp;代替
- const getGreeting(isOpen) = &lt;div&gt;{isOpen &amp;&amp; true}&lt;/div&gt;</p>
-<pre><code>
+  </li>
+  <li>jsx[用html元素]行内不能使用if\if else 语句
+    <pre><code> if: &amp;代替
+ const getGreeting(isOpen) = &lt;div&gt;{isOpen &amp;&amp; true}&lt;/div&gt;
 </code></pre>
-<p>if else:–&gt;三元运算代替
- const getGreeting(isOpen) = &lt;div&gt;{isOpen ? true : false}&lt;/div&gt;</p>
-<pre><code>- 内联样式
+    <pre><code> if else:--&gt;三元运算代替
+ const getGreeting(isOpen) = &lt;div&gt;{isOpen ? true : false}&lt;/div&gt;
 </code></pre>
-<p>const myStyle = {
-    fontSize: 100,—&gt;元素数字后自动添加px, 驼峰转化
-    color: ‘#FF0000’
+  </li>
+  <li>内联样式
+    <pre><code>const myStyle = {
+  fontSize: 100,---&gt;元素数字后自动添加px, 驼峰转化
+  color: '#FF0000'
 };
-const getGreeting() { return &lt;div style={myStyle}&gt;&lt;/div&gt;}</p>
-<pre><code>- 数组元素-&gt;数组所有成员添加模板中
+const getGreeting() { return &lt;div style={myStyle}&gt;&lt;/div&gt;}
 </code></pre>
-<p>const arr = [&lt;h1&gt;arr1&lt;/h1&gt;, &lt;h2&gt;arr2&lt;/h2&gt;]
-const getGreeting() { return &lt;div&gt;{arr}&lt;/div&gt;}</p>
-<pre><code>
-## React 组件
-- react元素 vs 组件命名: 
-   - 元素以小写字母开头, 组件以大写字母开头 
-   - 元素引用直接 元素名(所以无法传递props), 组件&lt;element props
-- 元素创建的3中方式
-  - 函数方式
-  - es6 class
-  - React.createClass
+  </li>
+  <li>数组元素-&gt;数组所有成员添加模板中
+    <pre><code>const arr = [&lt;h1&gt;arr1&lt;/h1&gt;, &lt;h2&gt;arr2&lt;/h2&gt;]
+const getGreeting() { return &lt;div&gt;{arr}&lt;/div&gt;}
 </code></pre>
-<p>function HelloWord(props) {–&gt;props传递
-      &lt;div&gt;{props.name}&lt;/div&gt;
-  }</p>
-<pre><code>
-</code></pre>
-<p>class HelloWolrd extends React.Component {
-      render(){
-          return &lt;div&gt;{this.props.name}&lt;/div&gt;
-      }
-  }</p>
-<pre><code>
-</code></pre>
-<p>var HelloWolrd = React.createClass({
-  render: function() {
-    return &lt;h1&gt;Hello {this.props.name}&lt;/h1&gt;;
-  }
-});</p>
-<pre><code>调用:
-</code></pre>
-<HelloWolrd name="test" />
+  </li>
+</ul>
 
-<pre><code>
-## React props
-- this.props.children: 表示组件的所有子节点
-  - 没有子节点undefined 
-  - 有一个子节点，数据类型是 object 
-  - 有多个子节点，数据类型就是 array
-  
+<h2 id="react-组件">React 组件</h2>
+<ul>
+  <li>react元素 vs 组件命名:
+    <ul>
+      <li>元素以小写字母开头, 组件以大写字母开头</li>
+      <li>元素引用直接 元素名(所以无法传递props), 组件&lt;element props</li>
+    </ul>
+  </li>
+  <li>元素创建的3中方式
+    <ul>
+      <li>函数方式</li>
+      <li>es6 class</li>
+      <li>React.createClass
+        <pre><code>function HelloWord(props) {--&gt;props传递
+  &lt;div&gt;{props.name}&lt;/div&gt;
+}
 </code></pre>
-<p>React.Children.map(this.props.children, function (child) {
-   return &lt;li&gt;{child}&lt;/li&gt;;–&gt;React.Children获取所有子节点, React.Children.map遍历子节点
-})</p>
-<pre><code>
-## React state
--  就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI
--  state vs props
-   - props不再改变的特性，而this.state 是会随着用户互动而产生变化的特性
-   - props父组件传递, state组件内部状态
-- this.state属性读取, this.setState({})变更state
+        <pre><code>class HelloWolrd extends React.Component {
+  render(){
+      return &lt;div&gt;{this.props.name}&lt;/div&gt;
+  }
+}
 </code></pre>
-<p>handleClick() {
-      this.setState({‘isOpen’: !this.state.isOpen})
-  }
-  class Hello extends react.Component{
-      render(){
-          const isOpen = this.state.isOpen;
-          return &lt;a onClick=this.handleClick()&gt;{isOpen ? true: false}&lt;/&gt;
-      }
-  }
+        <pre><code>var HelloWolrd = React.createClass({
+render: function() {
+return &lt;h1&gt;Hello {this.props.name}&lt;/h1&gt;;
+}
+});
+</code></pre>
+        <p>调用:
 ```</p>
+      </li>
+    </ul>
+    <HelloWolrd name="test" />
+
+    <p>```</p>
+  </li>
+</ul>
+
+<h2 id="react-props">React props</h2>
+<ul>
+  <li>this.props.children: 表示组件的所有子节点
+    <ul>
+      <li>没有子节点undefined</li>
+      <li>有一个子节点，数据类型是 object</li>
+      <li>有多个子节点，数据类型就是 array</li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code>React.Children.map(this.props.children, function (child) {
+   return &lt;li&gt;{child}&lt;/li&gt;;--&gt;React.Children获取所有子节点, React.Children.map遍历子节点
+})
+</code></pre>
+
+<h2 id="react-state">React state</h2>
+<ul>
+  <li>就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI</li>
+  <li>state vs props
+    <ul>
+      <li>props不再改变的特性，而this.state 是会随着用户互动而产生变化的特性</li>
+      <li>props父组件传递, state组件内部状态</li>
+    </ul>
+  </li>
+  <li>this.state属性读取, this.setState({})变更state
+    <pre><code>handleClick() {
+    this.setState({'isOpen': !this.state.isOpen})
+}
+class Hello extends react.Component{
+    render(){
+        const isOpen = this.state.isOpen;
+        return &lt;a onClick=this.handleClick()&gt;{isOpen ? true: false}&lt;/&gt;
+    }
+}
+</code></pre>
+  </li>
+</ul>
 
 <h2 id="组件声明周期">组件声明周期</h2>
 
