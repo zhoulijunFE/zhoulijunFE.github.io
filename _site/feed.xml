@@ -5,13 +5,141 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Jul 2017 12:53:47 +0800</pubDate>
-    <lastBuildDate>Sun, 23 Jul 2017 12:53:47 +0800</lastBuildDate>
+    <pubDate>Sun, 23 Jul 2017 23:07:47 +0800</pubDate>
+    <lastBuildDate>Sun, 23 Jul 2017 23:07:47 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
     
       <item>
         <title>react</title>
-        <description>
+        <description>&lt;h2 id=&quot;what-is-react&quot;&gt;what is react&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;构建用户界面的javascript库(非框架), 轻量级&lt;/li&gt;
+  &lt;li&gt;构建UI, mvc中v&lt;/li&gt;
+  &lt;li&gt;虚拟dom, 提升页面渲染速度, 变化部分局部更新&lt;/li&gt;
+  &lt;li&gt;jsx模板语言, 具有javascript全部功能, 是js扩展(非引入新概念指令、控制器)&lt;/li&gt;
+  &lt;li&gt;组件化, 增强代码复用、组件独立测试&lt;/li&gt;
+  &lt;li&gt;单向数据流, 比数据绑定更简单(非双向绑定:数据来源混乱)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;相关:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;http://www.runoob.com/react/react-tutorial.html&lt;/li&gt;
+  &lt;li&gt;https://facebook.github.io/react/docs/installation.html&lt;/li&gt;
+  &lt;li&gt;http://www.ruanyifeng.com/blog/2015/03/react.html&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reactdomrender&quot;&gt;ReactDOM.render()&lt;/h2&gt;
+&lt;p&gt;模板转化html语言, 插入指定的dom&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ReactDOM.render(
+    &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;,
+    document.getElementById('example')
+);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;react-jsx&quot;&gt;React JSX&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Babel编译jsx-&amp;gt;React.createElement(),不使用jsx也可以全通过js React,但是代码不简洁, 意思上是等价下
+```
+react元素创建,两种方式等价–&amp;gt;元素区别组件
+const getHelloWord = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;const element = React.createElement(
+  ‘h1’,
+  ‘Hello, world!’
+);&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- 遇到 HTML 标签（以 &amp;lt; 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析
+- 渲染之前,转义jsx值, 避免xss攻击
+- javaScript表达式: jsx中使用js表达式, 包裹{}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;function formatName(user) {
+  return user.firstName + ‘ ‘ + user.lastName;
+}
+function getGreeting(user) {
+  return &amp;lt;h1&amp;gt;Hello, {formatName(user)}&amp;lt;/h1&amp;gt;;–&amp;gt;{}
+}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- jsx[用html元素]行内不能使用if\if else 语句
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;if: &amp;amp;代替
+ const getGreeting(isOpen) = &amp;lt;div&amp;gt;{isOpen &amp;amp;&amp;amp; true}&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;if else:–&amp;gt;三元运算代替
+ const getGreeting(isOpen) = &amp;lt;div&amp;gt;{isOpen ? true : false}&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- 内联样式
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;const myStyle = {
+    fontSize: 100,—&amp;gt;元素数字后自动添加px, 驼峰转化
+    color: ‘#FF0000’
+};
+const getGreeting() { return &amp;lt;div style={myStyle}&amp;gt;&amp;lt;/div&amp;gt;}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- 数组元素-&amp;gt;数组所有成员添加模板中
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;const arr = [&amp;lt;h1&amp;gt;arr1&amp;lt;/h1&amp;gt;, &amp;lt;h2&amp;gt;arr2&amp;lt;/h2&amp;gt;]
+const getGreeting() { return &amp;lt;div&amp;gt;{arr}&amp;lt;/div&amp;gt;}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+## React 组件
+- react元素 vs 组件命名: 
+   - 元素以小写字母开头, 组件以大写字母开头 
+   - 元素引用直接 元素名(所以无法传递props), 组件&amp;lt;element props
+- 元素创建的3中方式
+  - 函数方式
+  - es6 class
+  - React.createClass
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;function HelloWord(props) {–&amp;gt;props传递
+      &amp;lt;div&amp;gt;{props.name}&amp;lt;/div&amp;gt;
+  }&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;class HelloWolrd extends React.Component {
+      render(){
+          return &amp;lt;div&amp;gt;{this.props.name}&amp;lt;/div&amp;gt;
+      }
+  }&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;var HelloWolrd = React.createClass({
+  render: function() {
+    return &amp;lt;h1&amp;gt;Hello {this.props.name}&amp;lt;/h1&amp;gt;;
+  }
+});&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;调用:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;HelloWolrd name=&quot;test&quot; /&gt;
+
+&lt;pre&gt;&lt;code&gt;
+## React props
+- this.props.children: 表示组件的所有子节点
+  - 没有子节点undefined 
+  - 有一个子节点，数据类型是 object 
+  - 有多个子节点，数据类型就是 array
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;React.Children.map(this.props.children, function (child) {
+   return &amp;lt;li&amp;gt;{child}&amp;lt;/li&amp;gt;;–&amp;gt;React.Children获取所有子节点, React.Children.map遍历子节点
+})&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+## React state
+-  就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI
+-  state vs props
+   - props不再改变的特性，而this.state 是会随着用户互动而产生变化的特性
+   - props父组件传递, state组件内部状态
+- this.state属性读取, this.setState({})变更state
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;handleClick() {
+      this.setState({‘isOpen’: !this.state.isOpen})
+  }
+  class Hello extends react.Component{
+      render(){
+          const isOpen = this.state.isOpen;
+          return &amp;lt;a onClick=this.handleClick()&amp;gt;{isOpen ? true: false}&amp;lt;/&amp;gt;
+      }
+  }
+```&lt;/p&gt;
+
+&lt;h2 id=&quot;组件声明周期&quot;&gt;组件声明周期&lt;/h2&gt;
+
 </description>
         <pubDate>Sun, 23 Jul 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/23/react/</link>
