@@ -174,7 +174,7 @@ return &lt;h1&gt;Hello, {formatName(user)}&lt;/h1&gt;;--&gt;{}
 }
 </code></pre>
   </li>
-  <li>jsx[用html元素]行内不能使用if\if else 语句
+  <li>jsx[用html元素]行内不能使用if、if else 语句
     <pre><code> if: &amp;代替
  const getGreeting(isOpen) = &lt;div&gt;{isOpen &amp;&amp; true}&lt;/div&gt;
 </code></pre>
@@ -275,8 +275,128 @@ class Hello extends react.Component{
   </li>
 </ul>
 
-<h2 id="组件声明周期">组件声明周期</h2>
+<h2 id="列表遍历和列表key类似js-map">列表遍历、和列表key(类似js map)</h2>
 
+<pre><code>List元素:
+ const listItems = numbers.map((number, index) =&gt;
+    &lt;li&gt;{number}&lt;/li&gt;
+ );
+</code></pre>
+<pre><code>List组件:html标签外
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number, index) =&gt;
+    &lt;li key={唯一的标记, 非遍历中的index索引}&gt;{number}&lt;/li&gt;
+  );
+  return (
+    &lt;ul&gt;{listItems}&lt;/ul&gt;
+  );
+}
+</code></pre>
+<pre><code>List组件:html内标签外, {}包裹, 两种方式等价
+function NumberList(props) {
+  const numbers = props.numbers;
+  return (
+     &lt;ul&gt;
+       {numbers.map((number) =&gt;
+          &lt;li&gt;{number}&lt;/li&gt;
+        )}
+     &lt;/ul&gt;
+  );
+}
+</code></pre>
+<ul>
+  <li>遍历添加key: 唯一标记这条记录,虚拟dom比较索引,加载查找速度
+    <ul>
+      <li>不要使用map-&gt;index作为key</li>
+      <li>不用组件中, 定义相关的key, 无影响</li>
+      <li>NumberList-&gt;ListItem-&gt;li多层组件, key添加到ListItem非遍历li上</li>
+      <li>key不存在props传递中, 如果需要传递唯一标识,可以id替换</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="forms">Forms</h2>
+<p>react form elements例如<input />、<textarea>、<select>跟html中区别</select></textarea></p>
+<ul>
+  <li>html: 用户输入界面, 界面值变更。</li>
+  <li>react: 需要onChange事件的回调函数,通过 event.target.value 读取用户输入的值,设置setState() 界面值变更
+    <pre><code> handleChange: function(event) {
+  this.setState({value: event.target.value});
+ },
+render: function () {
+  var value = this.state.value;
+  return (
+    &lt;div&gt;
+      &lt;input type="text" value={value} onChange={this.handleChange} /&gt;
+      &lt;p&gt;{value}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+  </li>
+</ul>
+
+<h2 id="组件组合和继承">组件组合和继承</h2>
+<p>建议组合增强复用性, 非继承</p>
+<h4 id="继承三种方式">继承三种方式</h4>
+<ul>
+  <li>对子节点类型不明确–&gt;只有一个子组件props.children
+```
+function FancyBorder(props) {
+return (
+    <div>
+    {props.children}
+  </div>
+    <p>);
+}
+调用:</p>
+  </li>
+</ul>
+<FancyBorder>
+  <div></div>---&gt;这个位置除了普通元素, 也可以是组件
+<FancyBorder>  
+```
+- 多个子组件类型不明确--&gt;两个props
+```
+function FancyBorder(props) {
+  return (
+    <div>
+      {props.left}
+    </div>
+    <div>
+      {props.right}
+    </div>
+  );
+}
+调用:
+<FancyBorder>
+  left={<a />}
+  right={<b />}---&gt;这个位置除了普通元素, 也可以是组件
+<FancyBorder> 
+```
+- A组件是B组件一个特例
+```
+function Dialog(props) {
+  return (
+    <FancyBorder>
+      <h1>
+        {props.title}
+      </h1>
+      <p>
+        {props.message}
+      </p>
+    </FancyBorder>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <Dialog title="Welcome" message="test" />
+  );
+}
+```
+</FancyBorder></FancyBorder></FancyBorder></FancyBorder>
 
             </article>
         </div>
