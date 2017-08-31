@@ -85,6 +85,7 @@ updateAttention(attentionParams);
     ```
 - #### 接口-继承接口extends
   - 一个接口可以继承多个接口: 用,分割接口组合
+
 ```
 interface ComponentLifecycle {
     componentDidMount?(): void;
@@ -97,6 +98,7 @@ interface Component extends ComponentLifecycle {
 ```
 - #### 类类型-实现接口implements
   - 实现接口的类需实现接口方法
+
 ```
  class Component implements ComponentLifecycle {
        componentDidMount() {
@@ -122,6 +124,7 @@ export default class Avatar {
 ```
 - #### 构造函数
   - new创建类实例的时候被调用
+  
 ```
 export default class Avatar {
    constructor(props) {
