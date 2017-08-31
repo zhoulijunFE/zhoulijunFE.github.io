@@ -41,6 +41,7 @@
  - void: 没有任何类型、函数没有返回值-->any相反
     
 ## 接口: 属性抽象、行为抽象, 规范类型
+   不检查属性的顺序，只要相应的属性存在并且类型匹配
 ```
 export const updateAttention = ({id, level}) => {
     //请求参数id, level
@@ -64,8 +65,7 @@ const attentionParams = {
     level: '2'
 }
 updateAttention(attentionParams);
-
-不检查属性的顺序，只要相应的属性存在并且类型匹配
+```
 
  - 可选属性(?): 属性不是必需的
  - 只读属性(readonly): 创建时初始化(vs  const用于变量, readonly用于属性)
