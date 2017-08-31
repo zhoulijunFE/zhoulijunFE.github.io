@@ -86,78 +86,78 @@ updateAttention(attentionParams);
 - #### 接口-继承接口extends
   - 一个接口可以继承多个接口: 用,分割接口组合
 
-```
-interface ComponentLifecycle {
-    componentDidMount?(): void;
-    shouldComponentUpdate?():boolean;
-}
-
-interface Component extends ComponentLifecycle { 
-         
-}
-```
+    ```
+    interface ComponentLifecycle {
+        componentDidMount?(): void;
+        shouldComponentUpdate?():boolean;
+    }
+    
+    interface Component extends ComponentLifecycle { 
+             
+    }
+    ```
 - #### 类类型-实现接口implements
   - 实现接口的类需实现接口方法
 
-```
- class Component implements ComponentLifecycle {
-       componentDidMount() {
-          //impl
-       }
-       shouldComponentUpdate() {
-          //impl
-       }
-  }
-```
-// TODO(zhoulj) Relationship between a TypeScript class and an interface with the same name
- https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name
+    ```
+     class Component implements ComponentLifecycle {
+           componentDidMount() {
+              //impl
+           }
+           shouldComponentUpdate() {
+              //impl
+           }
+      }
+    ```
+// TODO(zhoulj)
+-  [Relationship between a TypeScript class and an interface with the same name](https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name)
 
 ## 类
 - 传统: JavaScript程序使用函数和基于原型的继承来创建可重用的组件
 - es6: 基于类的面向对象的方式,基于类的继承并且对象是由类构建出来的
 - ts: 使用es6特性,并且编译后的JavaScript可以在所有主流浏览器和平台上运行
 
-```
-export default class Avatar {
-    //constructor  super
-}
-```
+    ```
+    export default class Avatar {
+        //constructor  super
+    }
+    ```
 - #### 构造函数
   - new创建类实例的时候被调用
-  
-```
-export default class Avatar {
-   constructor(props) {
-     // 默认空构造函数
-   }
-}
-```
+      
+    ```
+    export default class Avatar {
+       constructor(props) {
+         // 默认空构造函数
+       }
+    }
+    ```
 - #### 继承 extends
-```
-export default class Avatar extends Component  {
-   constructor(props) {
-      super(props);  //super调用父构造函数
-   }
-   render() {
-      //impl
-   }
-}
-```
+    ```
+    export default class Avatar extends Component  {
+       constructor(props) {
+          super(props);  //super调用父构造函数
+       }
+       render() {
+          //impl
+       }
+    }
+    ```
 - #### 公共，私有与受保护的修饰符
   - public: 默认, 可以类内、外访问
   - private: 类的内部访问
   - protected: 类的内部访问、继承类可以访问
   
-```
-export default class Avatar extends Component  {
-   private getRenderImage(src: string): any {
-     //impl
-   }
-   public render() {
-     //impl
-   }
-}
-```
+    ```
+    export default class Avatar extends Component  {
+       private getRenderImage(src: string): any {
+         //impl
+       }
+       public render() {
+         //impl
+       }
+    }
+    ```
 
 - #### readonly修饰符
   只读属性必须在声明时或构造函数里被初始化
@@ -166,87 +166,87 @@ export default class Avatar extends Component  {
   - 支持通过getters/setters来截取对对象成员的访问
   - 只带有 get不带有set的存取器自动被推断为readonly
  
-```
-class Person { 
-    constructor() {
-       this.name = name;
+    ```
+    class Person { 
+        constructor() {
+           this.name = name;
+        }
+        getName() {
+            return this.name;
+        }
+        setName(name) {
+          this.name = name;
+        }
     }
-    getName() {
-        return this.name;
-    }
-    setName(name) {
-      this.name = name;
-    }
-}
-var p = new Person('test');
-p.name;
-```
+    var p = new Person('test');
+    p.name;
+    ```
 - #### 静态属性
   - 类的实例成员，那些仅当类被实例化的时候才会被初始化的属性。
   -静态成员，属性存在于类本身上面而不是类的实例上
   - 要访问这个属性的时候，类名. 调用
-  ```
-    export default class Avatar extends Component  {
-       static defaultColors = [
-        '#61c5f9'
-       ]
-    }
-    访问: Avatar.defaultColors
-    ```
+      ```
+        export default class Avatar extends Component  {
+           static defaultColors = [
+            '#61c5f9'
+           ]
+        }
+        访问: Avatar.defaultColors
+        ```
 - ####  抽象类
   -   抽象类做为其它派生类的基类使用。 它们一般不会直接被实例化。 不同于接口，抽象类可以包含成员的实现细节。 abstract关键字是用于定义抽象类和在抽象类内部定义抽象方法
   -   抽象类中的抽象方法不包含具体实现并且必须在派生类中实现。 抽象方法的语法与接口方法相似。 两者都是定义方法签名但不包含方法体。 然而，抽象方法必须包含 abstract关键字并且可以包含访问修饰符。
   -   抽象类中的抽象方法不包含具体实现并且必须在派生类中实现。 抽象方法的语法与接口方法相似。 两者都是定义方法签名但不包含方法体。 然而，抽象方法必须包含 abstract关键字并且可以包含访问修饰符
-  
-```
-abstract class Department {
-    constructor(public name: string) {
+      
+    ```
+    abstract class Department {
+        constructor(public name: string) {
+        }
+    
+        printName(): void {
+            console.log('Department name: ' + this.name);
+        }
+    
+        abstract printMeeting(): void; // 必须在派生类中实现
     }
-
-    printName(): void {
-        console.log('Department name: ' + this.name);
+    
+    class AccountingDepartment extends Department {
+        constructor() {
+            super('Accounting and Auditing'); // constructors in derived classes must call super()
+        }
+    
+        printMeeting(): void {
+            console.log('The Accounting Department meets each Monday at 10am.');
+        }
     }
-
-    abstract printMeeting(): void; // 必须在派生类中实现
-}
-
-class AccountingDepartment extends Department {
-    constructor() {
-        super('Accounting and Auditing'); // constructors in derived classes must call super()
-    }
-
-    printMeeting(): void {
-        console.log('The Accounting Department meets each Monday at 10am.');
-    }
-}
-```
+    ```
 
 ## 函数
   TypeScript为JavaScript函数添加了额外的功能
 - #### 为函数定义类型:参数、返回值. 
   - 没有返回任何值，void
 
-```
-function add(x: number, y: number): number {
-    return x + y;
-}
-
-```
+    ```
+    function add(x: number, y: number): number {
+        return x + y;
+    }
+    
+    ```
 - #### 可选参数和默认参数
 传递给一个函数的参数个数必须与函数期望的参数个数一致
  - javaScript里，每个参数都是可选的，可传可不传。 没传参的时候，它的值就是undefined
  - TypeScript里我们可以在参数名旁使用 ?实现可选参数的功能
  - 在TypeScript里，我们也可以为参数提供一个默认值当用户没有传递这个参数或传递的值是undefined时。 它们叫做有默认初始化值的参数
  - 与普通可选参数不同的是，带默认值的参数不需要放在必须参数的后面。 如果带默认值的参数出现在必须参数前面，用户必须明确的传入 undefined值来获得默认值
- 
-```
-function buildName(firstName: string, lastName?: string) {
-  //    
-} 
-function buildName(firstName: string, lastName = "Smith") {
-    // ...
-}
-```
+     
+    ```
+    function buildName(firstName: string, lastName?: string) {
+      //    
+    } 
+    function buildName(firstName: string, lastName = "Smith") {
+        // ...
+    }
+    ```
 
 - #### 剩余参数
 它们表示某一个参数。 有时，你想同时操作多个参数，或者你并不知道会有多少参数传递进来。 在JavaScript里，你可以使用 arguments来访问所有传入的参数. 在TypeScript里，你可以把所有参数收集到一个变量里：
@@ -261,15 +261,15 @@ function buildName(firstName: string, ...restOfName: string[]) {
 - 考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型
 - 它是一种特殊的变量，只用于表示类型而不是值。
 
-```
-export interface AvatarProps {
-    className?: string,
-    id: string
-}
-export default class Avatar extends React.PureComponent<AvatarProps, any> {
-    //any、void、{}-->shouldComponentUpdate
-}
-```
+    ```
+    export interface AvatarProps {
+        className?: string,
+        id: string
+    }
+    export default class Avatar extends React.PureComponent<AvatarProps, any> {
+        //any、void、{}-->shouldComponentUpdate
+    }
+    ```
 ## 实战完整实例
 
 ```
