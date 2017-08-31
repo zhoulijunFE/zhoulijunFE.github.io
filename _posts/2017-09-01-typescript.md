@@ -16,29 +16,14 @@
   - 字符串(string)
     - 模板字符串: `，并且以${ expr }这种形式嵌入表达式
      ```
-    let name: string = "lili";
-    let template = `name is ${name}`; //js: 'name is' + name
+     let str: string = "lili";
+     let template = `name is ${str}`;
      ```
   - null
   - undefined
   - 数组([])
-    - 已知元素数量和类型的数组，各元素的类型不必相同: [string, number]
-    ```
-    let arry1: [string, number] = ['1', 1]
-    ===>let arry1: any[]
-    ```
-  - 枚举(enum)
-    - 未初始化:第一个元素默认0,其他成员的值为上一个枚举成员的值加1
-    - 初始化: 常数枚举表达式(数字字面量、需要计算表达式)
-    - 枚举是在运行时真正存在的一个对象, 编译js
-    ```
-    enum Color{
-       RED = 1, //默认0
-       YELLOW
-    };
-    ```
- - any: 不清楚类型的变量指定类型
- - void: 没有任何类型、函数没有返回值-->any相反
+  - any: 任何指定类型
+  - void: 没有任何类型、函数没有返回值-->any相反
     
 ## 接口: 属性抽象、行为抽象, 规范类型
    不检查属性的顺序，只要相应的属性存在并且类型匹配
@@ -75,9 +60,9 @@ updateAttention(attentionParams);
     }
    ```
    ```
-     class Component<P, S> {
-            props: Readonly<{ children?: ReactNode }> & Readonly<P>;
-            state: Readonly<S>;
+    class Component {
+        props: Readonly<{ children?: ReactNode }> & Readonly<P>;
+        state: Readonly<S>;
     }
     type Readonly<T> = {
         readonly [P in keyof T]: T[P];--->可选属性, 属性前加readonly
@@ -113,13 +98,21 @@ updateAttention(attentionParams);
   -  [Relationship between a TypeScript class and an interface with the same name](https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name)
 
 ## 类
-- 传统: JavaScript程序使用函数和基于原型的继承来创建可重用的组件
-- es6: 基于类的面向对象的方式,基于类的继承并且对象是由类构建出来的
-- ts: 使用es6特性,并且编译后的JavaScript可以在所有主流浏览器和平台上运行
+- JavaScript: 使用函数和prototype
+- es6: class
+- ts: 使用es6 class
 
     ```
-    export default class Avatar {
-        //constructor  super
+    class Avatar {
+        //属性方法
+    }
+    ```
+- #### 继承 extends
+    ```
+    class Avatar extends Component  {
+       render() {
+          //impl
+       }
     }
     ```
 - #### 构造函数
@@ -129,17 +122,7 @@ updateAttention(attentionParams);
     export default class Avatar {
        constructor(props) {
          // 默认空构造函数
-       }
-    }
-    ```
-- #### 继承 extends
-    ```
-    export default class Avatar extends Component  {
-       constructor(props) {
-          super(props);  //super调用父构造函数
-       }
-       render() {
-          //impl
+         // super(props);  super调用父构造函数
        }
     }
     ```
@@ -160,7 +143,7 @@ updateAttention(attentionParams);
     ```
 
 - #### readonly修饰符
-  只读属性必须在声明时或构造函数里被初始化
+  只读属性必须在声明时或初始化
 
 - #### 存取器 get、set--控制对对象成员的访问
   - 支持通过getters/setters来截取对对象成员的访问
@@ -182,12 +165,12 @@ updateAttention(attentionParams);
     p.name;
     ```
 - #### 静态属性
-  - 类的实例成员，那些仅当类被实例化的时候才会被初始化的属性。
-  -静态成员，属性存在于类本身上面而不是类的实例上
-  - 要访问这个属性的时候，类名. 调用
+  - 实例属性: 存在类对象,被实例化的时候才会被初始化的属性
+  - 静态属性: 存在类本身上面而不是类的实例上
+  - 访问属性: 类名. 调用
    
       ```
-        export default class Avatar extends Component  {
+        class Avatar extends Component  {
            static defaultColors = [
             '#61c5f9'
            ]
@@ -195,82 +178,77 @@ updateAttention(attentionParams);
         访问: Avatar.defaultColors
         ```
 - ####  抽象类
-  -   抽象类做为其它派生类的基类使用。 它们一般不会直接被实例化。 不同于接口，抽象类可以包含成员的实现细节。 abstract关键字是用于定义抽象类和在抽象类内部定义抽象方法
-  -   抽象类中的抽象方法不包含具体实现并且必须在派生类中实现。 抽象方法的语法与接口方法相似。 两者都是定义方法签名但不包含方法体。 然而，抽象方法必须包含 abstract关键字并且可以包含访问修饰符。
-  -   抽象类中的抽象方法不包含具体实现并且必须在派生类中实现。 抽象方法的语法与接口方法相似。 两者都是定义方法签名但不包含方法体。 然而，抽象方法必须包含 abstract关键字并且可以包含访问修饰符
+  - 不同于接口，抽象类可以包含实现细节
+  - 抽象方法abstract必须在子类中实现
       
     ```
     abstract class Department {
-        constructor(public name: string) {
-        }
-    
-        printName(): void {
-            console.log('Department name: ' + this.name);
-        }
-    
-        abstract printMeeting(): void; // 必须在派生类中实现
+        abstract printMeeting(): void;
     }
     
     class AccountingDepartment extends Department {
-        constructor() {
-            super('Accounting and Auditing'); // constructors in derived classes must call super()
-        }
-    
         printMeeting(): void {
-            console.log('The Accounting Department meets each Monday at 10am.');
+           //impl
         }
     }
     ```
-
-## 函数
-  TypeScript为JavaScript函数添加了额外的功能
-- #### 为函数定义类型:参数、返回值. 
-  - 没有返回任何值，void
-
-    ```
-    function add(x: number, y: number): number {
-        return x + y;
-    }
+## 枚举(enum)
+    - 未初始化:第一个元素默认0,其他成员的值为上一个枚举成员的值加1
+    - 初始化: 常数枚举表达式(数字字面量、需要计算表达式)
     
     ```
-- #### 可选参数和默认参数
-传递给一个函数的参数个数必须与函数期望的参数个数一致
- - javaScript里，每个参数都是可选的，可传可不传。 没传参的时候，它的值就是undefined
- - TypeScript里我们可以在参数名旁使用 ?实现可选参数的功能
- - 在TypeScript里，我们也可以为参数提供一个默认值当用户没有传递这个参数或传递的值是undefined时。 它们叫做有默认初始化值的参数
- - 与普通可选参数不同的是，带默认值的参数不需要放在必须参数的后面。 如果带默认值的参数出现在必须参数前面，用户必须明确的传入 undefined值来获得默认值
-     
+    enum Color{
+       RED = 1, //默认0
+       YELLOW
+    };
     ```
-    function buildName(firstName: string, lastName?: string) {
-      //    
-    } 
-    function buildName(firstName: string, lastName = "Smith") {
-        // ...
-    }
-    ```
-
-- #### 剩余参数
-它们表示某一个参数。 有时，你想同时操作多个参数，或者你并不知道会有多少参数传递进来。 在JavaScript里，你可以使用 arguments来访问所有传入的参数. 在TypeScript里，你可以把所有参数收集到一个变量里：
-
-    ```
-    function buildName(firstName: string, ...restOfName: string[]) {
-      return firstName + " " + restOfName.join(" ");
-    }
-    ```
-
+    
 ## 泛型
 - 考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型
 - 它是一种特殊的变量，只用于表示类型而不是值。
 
     ```
-    export interface AvatarProps {
+    class Component<P, S> {
+       //parent  
+    }
+    
+    interface AvatarProps {
         className?: string,
         id: string
     }
-    export default class Avatar extends React.PureComponent<AvatarProps, any> {
+    default class Avatar extends Component<AvatarProps, any> {
         //any、void、{}-->shouldComponentUpdate
     }
     ```
+
+## 函数
+- #### 定义类型:参数、返回值. 
+  - 没有返回任何值，void
+
+    ```
+    function add(x1: number, x2: number): number {
+        return x1 + x2;
+    }
+    
+    ```
+- #### 可选参数和默认参数
+    ```
+    function append(str1: string='s', str2?: string) {
+      // ?可选参数
+      // = 默认值
+    } 
+    ```
+
+- #### 多个未知参数
+  - js: arguments
+  - ts: 所有参数收集到一个变量里
+
+    ```
+    function append(str: string, ...strs: string[]) {
+      return str + " " + strs.join(" ");
+    }
+    ```
+    
 ## 实战完整实例
 
 ```
