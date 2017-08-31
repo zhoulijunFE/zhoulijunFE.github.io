@@ -3,7 +3,7 @@
   - JavaScript 的超集，支持所有的 JavaScript 语法
   - 强类型语言-静态类型检查
   - Classes、Interfaces、Enums、Generics
-  - 限制存在范围：public、private、protected
+  - 限制访问范围：public、private、protected
 
 - 缺点:
   - 有一定的学习成本，需要理解Classes、Interfaces、Enums、Generics
@@ -42,7 +42,7 @@ interface IAttention {
     id: string,
     level: string
 }
-export const updateAttention = (attention: IAttention) => {
+const updateAttention = (attention: IAttention) => {
     //请求参数id, level
 }
 const attentionParams = {
@@ -65,7 +65,7 @@ updateAttention(attentionParams);
         state: Readonly<S>;
     }
     type Readonly<T> = {
-        readonly [P in keyof T]: T[P];--->可选属性, 属性前加readonly
+        readonly [P in keyof T]: T[P];--->只读属性, 属性前加readonly
     };
     ```
 - #### 接口-继承接口extends
@@ -126,7 +126,7 @@ updateAttention(attentionParams);
        }
     }
     ```
-- #### 公共，私有与受保护的修饰符
+- #### 限制访问范围
   - public: 默认, 可以类内、外访问
   - private: 类的内部访问
   - protected: 类的内部访问、继承类可以访问
@@ -142,10 +142,10 @@ updateAttention(attentionParams);
     }
     ```
 
-- #### readonly修饰符
+- #### 只读属性(readonly)
   只读属性必须在声明时或初始化
 
-- #### 存取器 get、set--控制对对象成员的访问
+- #### 存取器 get、set--控制对象成员访问
   - 支持通过getters/setters来截取对对象成员的访问
   - 只带有 get不带有set的存取器自动被推断为readonly
  
@@ -176,7 +176,7 @@ updateAttention(attentionParams);
            ]
         }
         访问: Avatar.defaultColors
-        ```
+    ```
 - ####  抽象类
   - 不同于接口，抽象类可以包含实现细节
   - 抽象方法abstract必须在子类中实现
@@ -193,8 +193,8 @@ updateAttention(attentionParams);
     }
     ```
 ## 枚举(enum)
-    - 未初始化:第一个元素默认0,其他成员的值为上一个枚举成员的值加1
-    - 初始化: 常数枚举表达式(数字字面量、需要计算表达式)
+  - 未初始化:第一个元素默认0,其他成员的值为上一个枚举成员的值加1
+  - 初始化: 常数枚举表达式(数字字面量、需要计算表达式)
     
     ```
     enum Color{
