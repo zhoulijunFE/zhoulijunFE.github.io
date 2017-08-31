@@ -33,8 +33,8 @@
     - 枚举是在运行时真正存在的一个对象, 编译js
     ```
     enum Color{
-      RED = 1, //默认0
-      YELLOW
+       RED = 1, //默认0
+       YELLOW
     };
     ```
  - any: 不清楚类型的变量指定类型
@@ -66,11 +66,11 @@ const attentionParams = {
 updateAttention(attentionParams);
 
 不检查属性的顺序，只要相应的属性存在并且类型匹配
-```
+
  - 可选属性(?): 属性不是必需的
  - 只读属性(readonly): 创建时初始化(vs  const用于变量, readonly用于属性)
    ```
-      export interface AvatarProps {
+    export interface AvatarProps {
       className?: string--->可选属性, 属性名后?
     }
    ```
