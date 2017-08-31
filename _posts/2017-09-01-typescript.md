@@ -109,8 +109,8 @@ updateAttention(attentionParams);
            }
       }
     ```
-// TODO(zhoulj)
--  [Relationship between a TypeScript class and an interface with the same name](https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name)
+- #### TODO
+  -  [Relationship between a TypeScript class and an interface with the same name](https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name)
 
 ## 类
 - 传统: JavaScript程序使用函数和基于原型的继承来创建可重用的组件
@@ -185,6 +185,7 @@ updateAttention(attentionParams);
   - 类的实例成员，那些仅当类被实例化的时候才会被初始化的属性。
   -静态成员，属性存在于类本身上面而不是类的实例上
   - 要访问这个属性的时候，类名. 调用
+   
       ```
         export default class Avatar extends Component  {
            static defaultColors = [
@@ -251,11 +252,11 @@ updateAttention(attentionParams);
 - #### 剩余参数
 它们表示某一个参数。 有时，你想同时操作多个参数，或者你并不知道会有多少参数传递进来。 在JavaScript里，你可以使用 arguments来访问所有传入的参数. 在TypeScript里，你可以把所有参数收集到一个变量里：
 
-```
-function buildName(firstName: string, ...restOfName: string[]) {
-  return firstName + " " + restOfName.join(" ");
-}
-```
+    ```
+    function buildName(firstName: string, ...restOfName: string[]) {
+      return firstName + " " + restOfName.join(" ");
+    }
+    ```
 
 ## 泛型
 - 考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型
