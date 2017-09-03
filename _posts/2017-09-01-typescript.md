@@ -248,7 +248,90 @@ updateAttention(attentionParams);
       return str + " " + strs.join(" ");
     }
     ```
+
+## 模块引入
+   - 相对导入: 自己写的模块, 相对导入是以/，./或../开头的
+   - 非相对模块导入:  外部模块声明
+```
+import { fetchRegister } from '../actions/action';
+```
+
+```
+import * as React from 'react';
+```
+  - 模块解析策略: 到哪里去找module
+    - Classic: --module AMD | System | ES2015时的默认值
+    - Node:其他--module 默认策略(ts在Node解析逻辑基础上增加了TypeScript源文件的扩展名（ .ts，.tsx和.d.ts))
     
+
+```
+Classic相对引用：
+ /root/src/folder/A.ts
+ import { b } from"./moduleB"
+ 查找流程
+   /root/src/folder/moduleB.ts
+   /root/src/folder/moduleB.d.ts
+```
+
+```
+Classic非相对引用：向上级目录遍历
+ /root/src/folder/A.ts
+ import { b } from"moduleB"
+ 查找流程
+   /root/src/folder/moduleB.ts
+   /root/src/folder/moduleB.d.ts
+   /root/src/moduleB.ts
+   /root/src/moduleB.d.ts
+   /root/moduleB.ts
+   /root/moduleB.d.ts
+   /moduleB.ts
+   /moduleB.d.ts
+```
+
+```
+Node相对引用：(Node解析类似node.js require方式，ts扩展后缀名.ts，.tsx和.d.ts)
+ /root/src/folder/A.ts
+ import { b } from"./moduleB"
+ 查找流程
+   /root/src/moduleB.ts
+   /root/src/moduleB.tsx
+   /root/src/moduleB.d.ts
+   /root/src/moduleB/package.json (如果指定了"typings"属性)
+   /root/src/moduleB/index.ts
+   /root/src/moduleB/index.tsx
+   /root/src/moduleB/index.d.ts
+```
+
+```
+Node非相对引用
+ /root/src/folder/A.ts
+ import { b } from"moduleB"
+ 查找流程
+    /root/src/node_modules/moduleB.ts
+    /root/src/node_modules/moduleB.tsx
+    /root/src/node_modules/moduleB.d.ts
+    /root/src/node_modules/moduleB/package.json (如果指定了"typings"属性)
+    /root/src/node_modules/moduleB/index.ts
+    /root/src/node_modules/moduleB/index.tsx
+    /root/src/node_modules/moduleB/index.d.ts 
+    
+    /root/node_modules/moduleB.ts
+    /root/node_modules/moduleB.tsx
+    /root/node_modules/moduleB.d.ts
+    /root/node_modules/moduleB/package.json (如果指定了"typings"属性)
+    /root/node_modules/moduleB/index.ts
+    /root/node_modules/moduleB/index.tsx
+    /root/node_modules/moduleB/index.d.ts 
+    
+    /node_modules/moduleB.ts
+    /node_modules/moduleB.tsx
+    /node_modules/moduleB.d.ts
+    /node_modules/moduleB/package.json (如果指定了"typings"属性)
+    /node_modules/moduleB/index.ts
+    /node_modules/moduleB/index.tsx
+    /node_modules/moduleB/index.d.ts
+```
+
 ## 实战完整实例
 
 ```
